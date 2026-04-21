@@ -1,0 +1,63 @@
+Football-Comment: Start Project From Scratch
+
+1. Clone the repository and open a terminal in the project root:
+   d:\oldsys\projects\soccer\Football-comment
+
+2. Install system prerequisites:
+   - Python 3.11 or 3.12
+   - Node.js 18+ with npm
+   - FFmpeg added to PATH
+
+3. Create and activate a Python virtual environment:
+   Windows PowerShell:
+   python -m venv .venv
+   .\.venv\Scripts\Activate.ps1
+
+4. Install backend Python dependencies:
+   pip install --upgrade pip
+   pip install fastapi uvicorn python-multipart opencv-python numpy pandas scikit-learn ultralytics supervision easyocr google-generativeai soundfile kokoro
+
+5. Make sure the YOLO weights file exists in the project root:
+   - Required file: yolov8x.pt
+   - The current code expects this exact filename.
+
+6. Check Gemini API configuration in model.py:
+   - model.py currently hardcodes:
+     api_key = "abc"
+   - Replace that value with a real Gemini API key before running if you want Gemini-backed commentary initialization to work.
+   - If you leave it as-is, commentary falls back to the simpler built-in text path when Gemini init fails.
+
+7. Install frontend dependencies:
+   cd frontend
+   npm install
+   cd ..
+
+8. Start the backend server from the project root:
+   uvicorn backend:app --host 0.0.0.0 --port 8000 --reload
+
+9. Start the frontend in a second terminal:
+   cd frontend
+   npm run dev
+
+10. Open the frontend in the browser:
+   - Vite usually prints a local URL such as http://localhost:5173
+   - The frontend sends uploads to http://localhost:8000/upload-video
+
+11. Use the app:
+   - Upload a football video from the frontend
+   - Wait for processing to finish
+   - Output files are written into:
+     uploads\
+     outputs\
+
+12. Expected generated files in outputs\:
+   - *_processed.mp4
+   - *_final.mp4
+   - *_commentary.txt
+   - *_commentary_audio.wav
+
+Common issues:
+   - "ffmpeg not found": install FFmpeg and ensure it is on PATH.
+   - Upload endpoint errors on startup: make sure python-multipart is installed.
+   - OCR or model packages fail on some machines: update pip first, then retry installs inside the active virtual environment.
+   - Slow processing is expected on CPU; this project is heavy and runs much better with a capable GPU.
