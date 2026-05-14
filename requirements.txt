@@ -1,0 +1,18 @@
+fastapi
+uvicorn[standard]
+python-multipart
+python-dotenv
+
+numpy
+pandas
+opencv-python
+ultralytics
+supervision
+scikit-learn
+easyocr
+
+google-generativeai
+kokoro
+soundfile
+
+# Runtime system dependency: ffmpeg must be installed separately and available on PATH.

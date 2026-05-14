@@ -1,7 +1,9 @@
 def model(video_data):
+    import os
     import pandas as pd
     import google.generativeai as genai
     from collections import deque
+    from dotenv import load_dotenv
 
     PlayerBallAssigner = video_data["PlayerBallAssigner"]
 
@@ -20,7 +22,10 @@ def model(video_data):
 
             print("🎙️ Initializing Enhanced Gemini Commentary Engine...")
             try:
-                api_key = "abc"
+                load_dotenv()
+                api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+                if not api_key:
+                    raise ValueError("Set GOOGLE_API_KEY or GEMINI_API_KEY in your .env file.")
                 genai.configure(api_key=api_key)
                 self.model = genai.GenerativeModel("models/gemini-2.5-flash")
                 print("✅ Gemini 2.5 Flash model loaded successfully.")

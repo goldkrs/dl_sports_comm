@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+.Python
+.venv/
+venv/
+env/
+ENV/
+pip-wheel-metadata/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Frontend
+node_modules/
+dist/
+build/
+*.local
+
+# Project runtime artifacts
+dl_sports_comm/venv/
+dl_sports_comm/uploads/*
+!dl_sports_comm/uploads/help.txt
+dl_sports_comm/outputs/*
+!dl_sports_comm/outputs/help.txt
+dl_sports_comm/segment_audio/*
+!dl_sports_comm/segment_audio/.gitkeep
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.mp3
+*.wav
+*.pkl
+*.pt
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
