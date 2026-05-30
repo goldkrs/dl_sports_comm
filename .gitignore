@@ -42,8 +42,10 @@ dl_sports_comm/segment_audio/*
 *.mp3
 *.wav
 *.pkl
+
+# Model weights — ignore all .pt files except the one needed
 *.pt
-!yolov8x.pt
+!dl_sports_comm/yolov8x.pt
 
 # Logs
 *.log

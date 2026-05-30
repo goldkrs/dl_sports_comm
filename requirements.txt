@@ -11,7 +11,7 @@ supervision
 scikit-learn
 easyocr
 
-google-generativeai
+google-genai
 kokoro
 soundfile
 

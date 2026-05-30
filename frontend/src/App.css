@@ -202,19 +202,8 @@ button {
   font-size: 13px;
 }
 
-.preview-frame {
-  display: grid;
-  min-height: 475px;
-  place-items: center;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background:
-    linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
-    linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
-    #f8fafc;
-  background-size: 28px 28px;
-  overflow: hidden;
-}
+
+
 
 .video-preview {
   width: 100%;
@@ -285,3 +274,66 @@ button {
     min-height: 320px;
   }
 }
+
+/* ---- Job status text ---- */
+.status-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.progress-detail {
+  font-size: 13px;
+  color: var(--text);
+  font-family: monospace;
+}
+
+.progress-note {
+  font-size: 12px;
+  color: var(--muted);
+  max-width: 300px;
+}
+
+/* ---- Cancel button ---- */
+.cancel-button {
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+
+.cancel-button:hover {
+  background: #fef2f2;
+}
+
+/* ---- Download link ---- */
+.download-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 7px 16px;
+  border-radius: 7px;
+  background: #0f172a;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 140ms ease;
+}
+
+.download-link:hover {
+  background: #1e293b;
+}
+
+/* ---- Video + download stacked layout ---- */
+.preview-frame {
+  display: grid;
+  min-height: 475px;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    #f8fafc;
+  background-size: 28px 28px;
+  overflow: hidden;
+}
+

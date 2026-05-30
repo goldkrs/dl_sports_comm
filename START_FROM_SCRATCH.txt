@@ -1,38 +1,40 @@
 Football-Comment: Start Project From Scratch
 
 1. Clone the repository and open a terminal in the project root:
-   d:\oldsys\projects\soccer\Football-comment
+   d:\DL_PROJECT\dl_sports_comm
 
 2. Install system prerequisites:
    - Python 3.11 or 3.12
    - Node.js 18+ with npm
-   - FFmpeg added to PATH
+   - FFmpeg — install and add to PATH (verified at startup; you will get a clear error if missing)
 
 3. Create and activate a Python virtual environment:
    Windows PowerShell:
-   python -m venv .venv
-   .\.venv\Scripts\Activate.ps1
+   python -m venv venv
+   .\venv\Scripts\Activate.ps1
 
 4. Install backend Python dependencies:
    pip install --upgrade pip
-   pip install fastapi uvicorn python-multipart opencv-python numpy pandas scikit-learn ultralytics supervision easyocr google-generativeai soundfile kokoro
+   pip install fastapi uvicorn[standard] python-multipart python-dotenv
+   pip install numpy pandas opencv-python ultralytics supervision scikit-learn
+   pip install easyocr google-generativeai soundfile kokoro
 
-5. Make sure the YOLO weights file exists in the project root:
-   - Required file: yolov8x.pt
-   - The current code expects this exact filename.
+5. Configure your Gemini API key:
+   - Copy .env.example to .env
+   - Edit .env and set GOOGLE_API_KEY to your real key from https://aistudio.google.com/
+   - NEVER commit .env to git (it is already in .gitignore)
+   - Without a valid key, commentary falls back to a rule-based engine.
 
-6. Check Gemini API configuration in model.py:
-   - model.py currently hardcodes:
-     api_key = "abc"
-   - Replace that value with a real Gemini API key before running if you want Gemini-backed commentary initialization to work.
-   - If you leave it as-is, commentary falls back to the simpler built-in text path when Gemini init fails.
+6. Make sure the YOLO weights file exists:
+   - Required file: dl_sports_comm/yolov8x.pt
+   - Download from: https://docs.ultralytics.com/models/yolov8/
 
 7. Install frontend dependencies:
    cd frontend
    npm install
    cd ..
 
-8. Start the backend server from the project root:
+8. Start the backend server from the project root (dl_sports_comm/):
    uvicorn backend:app --host 0.0.0.0 --port 8000 --reload
 
 9. Start the frontend in a second terminal:
@@ -40,24 +42,31 @@ Football-Comment: Start Project From Scratch
    npm run dev
 
 10. Open the frontend in the browser:
-   - Vite usually prints a local URL such as http://localhost:5173
-   - The frontend sends uploads to http://localhost:8000/upload-video
+    - Vite usually prints a local URL such as http://localhost:5173
+    - The frontend uploads to http://localhost:8000/upload-video and polls
+      http://localhost:8000/job/{job_id} for status.
 
 11. Use the app:
-   - Upload a football video from the frontend
-   - Wait for processing to finish
-   - Output files are written into:
-     uploads\
-     outputs\
+    - Upload a football video from the frontend
+    - The upload returns immediately with a job ID
+    - The frontend polls every 5 seconds and shows live progress
+    - Output files are written into: uploads/ and outputs/
 
-12. Expected generated files in outputs\:
-   - *_processed.mp4
-   - *_final.mp4
-   - *_commentary.txt
-   - *_commentary_audio.wav
+12. Expected generated files in outputs/:
+    - *_processed.mp4            — annotated video (overlays only)
+    - *_final.mp4                — annotated video + commentary audio
+    - *_commentary.txt           — cleaned commentary text
+    - *_commentary_audio.wav     — generated narration
+
+13. Perspective transform note:
+    - The field-space coordinate mapping (for speed/distance) is calibrated
+      for the CityUtdR.mp4 broadcast angle by default.
+    - For other footage, update DEFAULT_PIXEL_VERTS in tracker.py or pass
+      custom pixel_verts to ViewTransformer() in preprocess.py.
 
 Common issues:
    - "ffmpeg not found": install FFmpeg and ensure it is on PATH.
    - Upload endpoint errors on startup: make sure python-multipart is installed.
-   - OCR or model packages fail on some machines: update pip first, then retry installs inside the active virtual environment.
-   - Slow processing is expected on CPU; this project is heavy and runs much better with a capable GPU.
+   - OCR or model packages fail: update pip first, then retry inside the venv.
+   - Slow processing is expected on CPU; a capable GPU significantly speeds things up.
+   - Cached tracks (.pkl) are auto-saved after first run and reused on subsequent runs.

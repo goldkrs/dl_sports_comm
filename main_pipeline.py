@@ -11,10 +11,12 @@ def process_video(
     input_video_path="CityUtdR.mp4",
     stub_path="tracks_stub.pkl",
     output_video_path="final_analysis_video-gemini.mp4",
+    pixel_verts=None,
 ):
     video_data = video_loader(input_video_path, stub_path, output_video_path)
     if video_data is None:
         return None
+    video_data["pixel_verts"] = pixel_verts
     video_data = preprocess(video_data)
     video_data = model(video_data)
     video_data = postprocess(video_data)
